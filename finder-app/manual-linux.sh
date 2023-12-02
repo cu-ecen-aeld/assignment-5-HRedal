@@ -42,9 +42,12 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     make ARCH=arm64 CROSS_COMPILE=${CROSS_COMPILE} modules
     make ARCH=arm64 CROSS_COMPILE=${CROSS_COMPILE} dtbs
   
+
     echo "Adding the Image in outdir"  
     cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}
 fi
+
+
 
 echo "Creating the staging directory for the root filesystem"
 cd "$OUTDIR"
@@ -99,10 +102,15 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 # TODO: Add library dependencies to rootfs
 export SYSROOT=$(${CROSS_COMPILE}gcc -print-sysroot)
 
-cp ${SYSROOT}/lib/ld-linux-aarch64.so.1 ./lib/
-cp ${SYSROOT}/lib64/libm.so.6 ./lib64/
-cp ${SYSROOT}/lib64/libresolv.so.2 ./lib64/
-cp ${SYSROOT}/lib64/libc.so.6 ./lib64/
+cp -a ${SYSROOT}/lib/ld-linux-aarch64.so.1 ./lib/
+cp -a ${SYSROOT}/lib64/libm.so.6 ./lib64/
+cp -a ${SYSROOT}/lib64/libresolv.so.2 ./lib64/
+cp -a ${SYSROOT}/lib64/libc.so.6 ./lib64/
+cp -a $SYSROOT/lib64/ld-2.33.so ./lib64/
+cp -a $SYSROOT/lib64/libm-2.33.so ./lib64/
+cp -a $SYSROOT/lib64/libresolv-2.33.so ./lib64/
+cp -a $SYSROOT/lib64/libc-2.33.so ./lib64/
+
 
 # TODO: Make device nodes
 sudo mknod -m 666 dev/null c 1 3
