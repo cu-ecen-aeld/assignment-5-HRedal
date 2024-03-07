@@ -1,5 +1,6 @@
 
-config BR2_PACKAGE_AESD_ASSIGNMENTS
+config BR2_PACKAGE_LDD
 	bool "ldd3-assignments"
+	depends on BR2_LINUX_KERNEL
 	help
 	  Linux Device Drivers 3 (http://lwn.net/Kernel/LDD3/) book is now a few years old and most of the example drivers do not compile in recent kernels. This project aims to keep LDD3 example drivers up-to-date with recent kernels. The original code can be found at: http://examples.oreilly.com/9780596005900/
