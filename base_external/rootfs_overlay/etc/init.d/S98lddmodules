@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case $1 in
+    start)
+        echo "loading scull faulty hello"
+        cd /lib/modules/5.1.1/extra/
+        scull_load
+        module_load faulty
+        modprobe hello
+        ;;
+    stop)
+        echo "unloading scull faulty hello"
+        cd /lib/modules/5.1.1/extra/
+        scull_unload
+        module_unload faulty
+        modprobe -r hello
+        ;;
+    *)
+        echo "Usage is $0 [start/stop]"
+    	exit 1
+esac
+
+exit 0
